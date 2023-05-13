@@ -1,0 +1,38 @@
+<launch>
+    <!-- Launch arm Realsense Camera -->
+    <!-- <include file="$(find realsense2_camera)/launch/rs_rgbd_armCamera.launch"/> -->
+    
+    <!-- Launch front Realsense Camera -->
+    <!-- <include file="$(find realsense2_camera)/launch/rs_rgbd_frontCamera.launch" /> -->
+
+    <!-- Launch pointcloud segmentation -->
+    <node pkg="object_segmentation_with_pointclouds" type="object-segmentation-with-pointclouds_segment" name="nearest_pointcloud_segmented_obj"> -->
+        <!-- Change to input for conversion -->
+        <remap from="/armCamera/nearestCloudCluster_FilledPointCloud"  to="/input"/>
+    </node>
+
+    <!-- Launch pointcloud conversion to image -->
+    <node pkg="pcl_ros" type="convert_pointcloud_to_image" name="pcl_to_image">
+        <remap from ="output" to="/armCamera/nearestCloudCluster_ImageFromFilledPointCloud"/>
+    </node>
+
+    <!-- Launch pointcloud bounding box annotation -->
+    <node pkg="object_segmentation_with_pointclouds" type="boundingbox.py" name="pointcloud_bounding_box"/>
+
+    <!-- Launch colour segmentation -->
+    <node pkg="object_segmentation_with_colour" type="segmented_colour.py" name="colour_segmented_obj"/>
+
+    <!-- Launch bounding box masking -->
+    <node pkg="image_masking_with_pointclouds_and_colour" type="image_masking.py" name="bounding_box_masking"/>
+
+    <!-- Launch tableside identification -->
+    <node pkg="table_identification_with_apriltags" type="tableSide_align.py" name="tableSide_identification"/>
+
+    <!-- Launch tabletop identification -->
+    <!-- <node pkg="table_identification_with_apriltags" type="tableTop_align.py" name="tableTop_identification"/> -->
+
+    <!-- PICK UP AND DROP OFF POINT NODES -->
+    <!-- Launch front april tag detection -->
+    <include file="$(find apriltag_ros)/launch/continuous_detection_front.launch"/>
+
+</launch>
