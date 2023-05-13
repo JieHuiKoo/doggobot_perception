@@ -1,0 +1,17 @@
+<launch>
+    <!-- Launch object identification -->
+    <node pkg="object_identification_with_keras" type="object_identify.py" name="object_identification"/>
+
+    <!-- Launch GetTargetLocation Service -->
+    <node pkg="apriltag_location_to_map" type="apriltag_location_to_map_convert" name="get_target_location"/>
+
+    <!-- Launch GetPickupCentroid Service -->
+    <node pkg="image_masking_with_pointclouds_and_colour" type="get_pickup_centroid.py" name="get_pickup_centroid"/>
+    
+    <!-- Launch TakeAndUploadPhoto Service -->
+    <node pkg="take_and_upload_photos" type="upload_photo.py" name="take_and_upload_photo"/>
+
+    <!-- Launch Xampp server -->
+    <node pkg="take_and_upload_photos" type="start_webserver.sh" name="start_webserver"/>
+
+</launch>
