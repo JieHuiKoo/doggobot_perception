@@ -9,10 +9,12 @@ Please make sure the following repos are cloned into the PC.
 4) take_and_upload_photos
 
 Please make sure the following repos are cloned into the doggobot.
-1) object_segmentation_with_pointclouds
-2) object_segmentation_with_colour
-3) image_masking_with_with_pointclouds_and_colour
-4) table_identification_with_apriltags
+1) pcl_ros
+2) apriltag_ros
+3) object_segmentation_with_pointclouds
+4) object_segmentation_with_colour
+5) image_masking_with_with_pointclouds_and_colour
+6) table_identification_with_apriltags
 
 To run, on the PC, roslaunch the following.
 ```
